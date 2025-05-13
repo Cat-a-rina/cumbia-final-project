@@ -24,14 +24,20 @@
     sampler.toDestination()
 
     let c, v, es, m, b, a, p
+    nn.on('keydown', (e) => {
+        if (e.key === 'c') sampler.triggerAttack('C4')
+        })
 
-    keyCheck(c)
-    keyCheck(v)
-    keyCheck(es)
-    keyCheck(m)
-    keyCheck(b)
-    keyCheck(a)
-    keyCheck(p)
+        nn.on('keyup', (e) => {
+        if (e.key === 'c') sampler.triggerRelease('C4')
+        })
+    // keyCheck(c)
+    // keyCheck(v)
+    // keyCheck(es)
+    // keyCheck(m)
+    // keyCheck(b)
+    // keyCheck(a)
+    // keyCheck(p)
 
     const wave = createWaveform()
     const spec = createSpectrum({ range: [0, 8000] })
