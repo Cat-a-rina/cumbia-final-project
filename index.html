@@ -2,9 +2,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
 <script>
     /*global nn, paper*/
+    const circles = []
     //background
     //blob
-    function blob () {
+    function blob (event) {
         const blob = new paper.Path.Circle({
             center: event.point,
             radius: 50,
