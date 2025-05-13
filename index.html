@@ -5,7 +5,7 @@
     const circles = []
     //background
     //blob
-    function blob (event) {
+    function keypush (event) {
         const blob = new paper.Path.Circle({
             center: event.point,
             radius: 50,
@@ -42,7 +42,7 @@
         fillcolor: '#f0f0f0'
     })
     //paper reacts to key clicks
-    paper.view.attach('keypress', blob)
+    paper.view.attach('keypress', keypush)
     }
     nn.on('load', setup)
 </script>
