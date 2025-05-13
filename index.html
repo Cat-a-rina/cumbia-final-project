@@ -1,5 +1,39 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
 <script>
-    /*global nn*/
-    
+    /*global nn, paper*/
+    //background
+    //blob
+    function blob () {
+        const blob = new paper.Path.Circle({
+            center: event.point,
+            radius: 50,
+            fillColor: 'black',
+            strokeColor: 'white',
+            strokeWidth: 5
+        })
+
+        circles.push(circle)
+    }
+    //video in blob, pulled / uploaded
+    //setup
+    function setup() {
+        const canvas = nn.create('canvas')
+        .set({ width: nn.width, height: nn.height})
+        .position(0, 0)
+        .addTo('body')
+
+    //working with paper, using global var
+    paper.setup(canvas)
+
+
+    new paper.Path.Rectangle({ 
+        point: [0, 0],
+        size: [nn.width, nn.height],
+        fillcolor: '#f0f0f0'
+    })
+    //paper reacts to key clicks
+    paper.view.attach('keypress', blob)
+    }
+    nn.on('load', setup)
 </script>
