@@ -1,17 +1,9 @@
 <body></body>
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
-<script src="https://unpkg.com/tone"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="https://algorithmicmusic.online/js/create-spectrum.js"></script>
-<script src="https://algorithmicmusic.online/js/create-waveform.js"></script>
 <script>
     /*global nn, Tone, d3, createWaveform, createSpectrum*/
     //background
     //blob
-    const aaah = 'https://upload.wikimedia.org/wikipedia/commons/6/65/Open_front_unrounded_vowel.ogg'
-    const sampler = new Tone.Sampler({
-        urls: { 'C4': aaah }
-    })
 
     // function keyCheck(m) {
     //     nn.on('keydown', (e) => {
@@ -22,40 +14,26 @@
     //     if (e.key === m) sampler.triggerRelease()
     //     })
     // }
-    sampler.toDestination()
-    nn.create('label')
-  .content('press the "c" key to play the sample')
-  .addTo('body')
-    let c, v, es, m, b, a, p
-    nn.on('keydown', (e) => {
-        if (e.key === 'c') sampler.triggerAttack('C4')
-        })
 
-        nn.on('keyup', (e) => {
-        if (e.key === 'c') sampler.triggerRelease('C4')
-        })
-    // keyCheck(c)
-    // keyCheck(v)
-    // keyCheck(es)
-    // keyCheck(m)
-    // keyCheck(b)
-    // keyCheck(a)
-    // keyCheck(p)
-
-    const wave = createWaveform()
-    const spec = createSpectrum({ range: [0, 8000] })
-    sampler.connect(wave)
-    sampler.connect(spec)
-    //video in blob, pulled / uploaded
-    //setup
-    // function setup() {
-    //     const canvas = nn.create('canvas')
-    //     .set({ width: nn.width, height: nn.height})
-    //     .position(0, 0)
-    //     .addTo('body')
-
-    // //paper reacts to key clicks
-    // paper.view.attach('keypress', keypush)
-    // }
     //nn.on('load', setup)
+    let baseSize = 100;
+let pulseSpeed = 0.05;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  noStroke();
+  ellipseMode(RADIUS);
+}
+
+function draw() {
+  background(30); // dark background for contrast
+
+  fill(255, 100, 150); // color of the circle
+
+  // Use sin() to create a pulsing effect
+  let scale = sin(frameCount * pulseSpeed) * 20;
+
+  // Draw circle at center with pulsing radius
+  ellipse(width / 2, height / 2, baseSize + scale, baseSize + scale);
+}
 </script>
