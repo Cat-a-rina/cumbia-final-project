@@ -16,24 +16,10 @@
     // }
 
     //nn.on('load', setup)
-    let baseSize = 100;
-let pulseSpeed = 0.05;
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  noStroke();
-  ellipseMode(RADIUS);
-}
-
-function draw() {
-  background(30); // dark background for contrast
-
-  fill(255, 100, 150); // color of the circle
-
-  // Use sin() to create a pulsing effect
-  let scale = sin(frameCount * pulseSpeed) * 20;
-
-  // Draw circle at center with pulsing radius
-  ellipse(width / 2, height / 2, baseSize + scale, baseSize + scale);
-}
+    nn.create('div').content().css({
+        position: 'absolute',
+        color: 'black',
+        left: '10%',
+        top: '50%'
+    }).addTo('body')
 </script>
