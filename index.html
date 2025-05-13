@@ -2,47 +2,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
 <script>
     /*global nn, paper*/
-    const circles = []
     //background
     //blob
-    function keypush (event) {
-        const blob = new paper.Path.Circle({
-            center: event.point,
-            radius: 50,
-            fillColor: 'black',
-            strokeColor: 'white',
-            strokeWidth: 5
+    const aaah = 'https://upload.wikimedia.org/wikipedia/commons/6/65/Open_front_unrounded_vowel.ogg'
+    const sampler = new Tone.Sampler({
+        urls: { 'C4': aaah }
+    })
+
+    function keyCheck(m) {
+        nn.on('keydown', (e) => {
+        if (e.key === m) sampler.triggerAttack()
         })
 
-        circles.push(circle)
-
-        circle.onFrame = function() {
-            this.scale(0.99)
-            if (this.bounds.width < 1) {
-                this.remove()
-                circles.splice(circles.indexOf(this), 1)
-            }
-        }
+        nn.on('keyup', (e) => {
+        if (e.key === m) sampler.triggerRelease()
+        })
     }
+    sampler.toDestination()
+
+    let c, v, es, m, b, a, p
+
+    keyCheck(c)
+    keyCheck(v)
+    keyCheck(es)
+    keyCheck(m)
+    keyCheck(b)
+    keyCheck(a)
+    keyCheck(p)
+
+    const wave = createWaveform()
+    const spec = createSpectrum({ range: [0, 8000] })
+    sampler.connect(wave)
+    sampler.connect(spec)
     //video in blob, pulled / uploaded
     //setup
-    function setup() {
-        const canvas = nn.create('canvas')
-        .set({ width: nn.width, height: nn.height})
-        .position(0, 0)
-        .addTo('body')
+    // function setup() {
+    //     const canvas = nn.create('canvas')
+    //     .set({ width: nn.width, height: nn.height})
+    //     .position(0, 0)
+    //     .addTo('body')
 
-    //working with paper, using global var
-    paper.setup(canvas)
-
-
-    new paper.Path.Rectangle({ 
-        point: [0, 0],
-        size: [nn.width, nn.height],
-        fillcolor: '#f0f0f0'
-    })
-    //paper reacts to key clicks
-    paper.view.attach('keypress', keypush)
-    }
-    nn.on('load', setup)
+    // //paper reacts to key clicks
+    // paper.view.attach('keypress', keypush)
+    // }
+    //nn.on('load', setup)
 </script>
