@@ -12,17 +12,19 @@
         urls: { 'C4': aaah }
     })
 
-    function keyCheck(m) {
-        nn.on('keydown', (e) => {
-        if (e.key === m) sampler.triggerAttack()
-        })
+    // function keyCheck(m) {
+    //     nn.on('keydown', (e) => {
+    //     if (e.key === m) sampler.triggerAttack()
+    //     })
 
-        nn.on('keyup', (e) => {
-        if (e.key === m) sampler.triggerRelease()
-        })
-    }
+    //     nn.on('keyup', (e) => {
+    //     if (e.key === m) sampler.triggerRelease()
+    //     })
+    // }
     sampler.toDestination()
-
+    nn.create('label')
+  .content('press the "c" key to play the sample')
+  .addTo('body')
     let c, v, es, m, b, a, p
     nn.on('keydown', (e) => {
         if (e.key === 'c') sampler.triggerAttack('C4')
