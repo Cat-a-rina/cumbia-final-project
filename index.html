@@ -202,7 +202,13 @@ let remixButton = nn.create('button')
 }).on('click', () => {remix = true
                      remixButton.css({
                      backgroundColor:'black',
-                     color: 'white'})})
+                     color: 'white'})
+                     nn.create('label').content('Press any of the CAMPEV keys and listen to where the instruments overlap, despite each Cumbia being from a different region. (Note: You may need to refresh if it gets too chaotic)').addTo('body').css({
+                       position: 'absolute',
+                       color: 'white',
+                       top: nn.height,
+                       fontSize: '12px'
+                     })})
 
   
 let currentPlay = null
