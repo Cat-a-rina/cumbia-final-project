@@ -150,12 +150,15 @@ function loadVideo(musicVid, spec, color) {
     left: (nn.width/2) - 211,
     width: (nn.height/2) + 74,
     height: (nn.height /2) + 71.5,
-    backgroundColor: color,
+    //backgroundColor: color,
     borderRadius: '50%'
   })
   vid.volume = 0.0
   
   const player = new Tone.Player(musicVid, () => {
+    vid.css({
+      backgroundColor: color
+    })
     vid.play()
     player.toDestination()
     player.connect(spec)
