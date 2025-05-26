@@ -7,7 +7,6 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://algorithmicmusic.online/js/create-waveform.js"></script>
 <script>
-
 //--Modified Circle Spectrum (remixed on Prof Briz's code)--//
 /* global d3, Tone */
 function createSpectrum (opts) {
@@ -140,17 +139,17 @@ const spec = createSpectrum({
   range: [0, 8000],
 })
 
-function loadVideo(musicVid, spec) {
+function loadVideo(musicVid, spec, color) {
   const vid = nn.create('video').set({
   src: musicVid,
   loop: true 
   })
   .addTo('body').css({
     position: 'absolute',
-    top: (nn.height/2) - (nn.height /4), 
-    left: (nn.width/2) - (nn.width /4),
-    width: nn.height /2,
-    height: (nn.height /2),
+    top: (nn.height/2) - 205, 
+    left: (nn.width/2) - 210,
+    width: (nn.height/2) + 72,
+    height: (nn.height /2) + 60,
     //backgroundColor: 'blue',
     borderRadius: '50%'
   })
@@ -164,6 +163,7 @@ function loadVideo(musicVid, spec) {
     player.loop = true
     
   })
+  spec.svg.select('path').attr('stroke',color)
   return {vid: vid, player}
 }
   
@@ -172,8 +172,8 @@ nn.create('label')
   .content('Get to know different variations of Cumbia from around Latin America!')
   .addTo('body').css({
   position: 'absolute',
-  top: nn.height - '24px',
-  left: nn.width/3.5,
+  top: 50,
+  left: nn.width/6,
   color: 'white',
   fontSize: '24px'
 })
@@ -181,65 +181,47 @@ nn.create('label')
   .content('Try using the first letter of Colombia, Argentina, Mexico, Peru, El Salvador, Venezuela as keys')
   .addTo('body').css({
   position: 'absolute',
-  top: '24px' - nn.height ,
-  left: '10px',
+  top: nn.height - 72,
+  left: nn.width /11,
   color: 'white',
   fontSize: '24px'
 })
   
 // visualizations
-//----Load Videos based on Keys CAMPEV------//
+//----Load Videos based on Keys C A M P E V------//
 let remix = false
-function toggleRemix() {
-  remix = true
-}
-
- let remixButton = nn.create('button')
-  .content('Want to try remixing into your own Cumbia?')
-  .addTo('body')
-  .on('click', toggleRemix)
-
+let remixButton = nn.create('button')
+  .content('Want to try remixing these songs into your own Cumbia?')
+  .addTo('body').css({
+  position: 'absolute',
+  top: nn.height - 30,
+  left: (nn.width/2) -160
+})
+  .on('click', () => remix = true)
+  
 let currentPlay = null
 nn.on('keydown', async (e) => {
-  if ((currentPlay)) { //we have an ongoing video already, and don't want to overlap (yet)
+  if ((currentPlay) && (!remix)) { //we have an ongoing video already, and don't want to overlap (yet)
     currentPlay.vid.pause()
     currentPlay.vid.remove()
     currentPlay.player.stop()
     currentPlay.player.dispose()
+    spec.svg.select('path').attr('stroke', 'white')
   }
   await Tone.start() 
   
-  if (e.key === 'c') {
-    currentPlay = loadVideo(colombiaAM, spec)
-  }
-  if (e.key === 'a') {
-    currentPlay = loadVideo(argentinaR, spec)
-  }
-  if (e.key === 'm') {
-    currentPlay = loadVideo(mexicoLAA, spec)
-  }
-  if (e.key === 'p') {
-    currentPlay = loadVideo(peruLM, spec)
-  }
-  if (e.key === 'e') {
-    currentPlay = loadVideo(elSalvadorLHF, spec)
-  }
-  if (e.key === 'v') {
-    currentPlay = loadVideo(venezuelaPL, spec)
-  }
-  if ((e.key ==='s') && (currentPlay)) {
+  if (e.key === 'c') currentPlay = loadVideo(colombiaAM, spec, 'yellow')
+  if (e.key === 'a') currentPlay = loadVideo(argentinaR, spec, 'blue')
+  if (e.key === 'm') currentPlay = loadVideo(mexicoLAA, spec, 'green')
+  if (e.key === 'p') currentPlay = loadVideo(peruLM, spec, 'red')
+  if (e.key === 'e') currentPlay = loadVideo(elSalvadorLHF, spec, 'blue')
+  if (e.key === 'v') currentPlay = loadVideo(venezuelaPL, spec, 'yellow')
+  if ((e.key ==='s')) {
+    remix = false
     currentPlay.player.stop()
   }
-
+  
 })
-// nn.on('keyup', (e) => {
-//   if (e.key === 'm') {
-//     sampler.triggerRelease('C6')
-//    }
-// })
-
-//const spec = createSpectrum({ range: [0, 8000] })
-
-//sampler.connect(spec)
+  
 
 </script>
